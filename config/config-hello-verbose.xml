@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testconfiguration>
+ <wrapper name="utils.hello">
+   <arg name="verbose" value="True"/>
+ </wrapper>
+</testconfiguration>

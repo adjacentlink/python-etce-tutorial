@@ -1,0 +1,7 @@
+<steps>
+  <step name="say.hello">
+    <run wrapper="utils.hello">
+      <arg name="greeting" value="Hi ya"/>
+    </run>
+  </step>
+</steps>

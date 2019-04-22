@@ -1,0 +1,10 @@
+<test>
+  <name>02.hello_lxc</name>
+
+  <description>
+    Expand 01.hello to execute on
+    multiple nodes. Introduce
+    LXC plan file for launching
+    containers.
+  </description>
+</test>

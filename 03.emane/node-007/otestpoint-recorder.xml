@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<otestpoint-recorder file="${etce_log_path}/node-007/otestpoint-recorder.data">
+  <testpoint publish="node-007:8882"/>
+</otestpoint-recorder>

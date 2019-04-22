@@ -1,0 +1,12 @@
+<test>
+  <name>04.emane</name>
+
+  <description>
+    emane-tutorial demonstration 3 in ETCE Test Directory format
+    and using templates.
+  </description>
+
+  <templates indices="1-10">
+    <directory name="node"/>
+  </templates>
+</test>
