@@ -32,23 +32,26 @@
 #
 
 
-usage="usage: start_demo.sh [-e ENVFILE] [-p SSHPORT] DEMODIR"
+usage="usage: start_demo.sh [-e ENVFILE] [-p SSHPORT] [-k SSHKEYFILE] SSHUSER DEMODIR"
 
 envfile=/dev/null
 
+sshuser=
+
+sshkeyfile=
+
 sshport=22
 
-run_broker=0
-
-while getopts ":hbe:p:" opt; do
+while getopts ":hbe:p:k:" opt; do
     case $opt in
-        b) run_broker=1;
-           ;;
         e) envfile=${OPTARG};
            echo "envfile=${envfile}"
            ;;
         p) sshport=${OPTARG};
            echo "sshport=${sshport}"
+           ;;
+        k) sshkeyfile=${OPTARG};
+           echo "sshkeyfile="${sshkeyfile}
            ;;
         h) echo ${usage} && exit 0
            ;;
@@ -59,8 +62,15 @@ done
 
 shift $((OPTIND-1))
 
-demodir=$1
+if [ $# != "2" ]; then
+    echo ${usage}
+    exit 1
+fi
 
+sshuser=$1
+demodir=$2
+
+echo "sshuser=${sshuser}"
 echo "demodir=${demodir}"
 
 if [ ! -d ${demodir} ]; then
@@ -82,20 +92,26 @@ if [ -f "/tmp/etce/lxcroot/etce.lxc.lock" ]; then
     exit 1
 fi
 
-# start lxcs
-sudo etce-lxc start --writehosts ${lxcplanfile}
+# start lxcs if the lxcplanfile exists
+if [ -f ${lxcplanfile} ]; then
+    sudo etce-lxc start --writehosts ${lxcplanfile}
 
-# wait for them to come up
-echo "Waiting for LXCs ..."
-sleep 5
+    # wait for them to come up
+    echo "Waiting for LXCs ..."
+    sleep 5
+fi
 
-echo "Checking ssh connections on port ${sshport} ..."
-etce-populate-knownhosts -p ${sshport} ${hostfile}
+echo
 
-# start demo
-
-if [ $run_broker -eq 1 ]; then
-    etce-test run -v --user root --env ${envfile}                                --port ${sshport} nsc ${hostfile} ${demodir}
+# check connectivity and start demo
+if [ $sshkeyfile ]; then
+    echo "Checking ssh connections on port ${sshport} ..."
+    etce-populate-knownhosts -u ${sshuser} -p ${sshport} -k ${sshkeyfile} ${hostfile}
+    echo
+    etce-test run -v --user ${sshuser} --sshkey ${sshkeyfile} --env ${envfile} --port ${sshport} etcedemo ${hostfile} ${demodir}
 else
-    etce-test run -v --user root --env ${envfile} --filtersteps otestpointbroker --port ${sshport} nsc ${hostfile} ${demodir}
+    echo "Checking ssh connections on port ${sshport} ..."
+    etce-populate-knownhosts -u ${sshuser} -p ${sshport}                  ${hostfile}
+    echo
+    etce-test run -v --user ${sshuser}                        --env ${envfile} --port ${sshport} etcedemo ${hostfile} ${demodir}
 fi
