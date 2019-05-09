@@ -5,7 +5,6 @@
   
   <step name="emane.start">
     <run wrapper="emane"/>
-    <run wrapper="emaneeventd"/>
   </step>
   <step name="routing.start">
     <run wrapper="olsrd"/>
@@ -16,11 +15,12 @@
     <run wrapper="otestpointbroker"/>
   </step>
   <step name="run">
+    <run wrapper="emaneeventd"/>
     <run wrapper="emaneeventservice"/>
     <run wrapper="gpsd"/>
     <run wrapper="mgen"/>
   </step>
-  <step name="save.stats">
+  <step name="emanesh.snapshot">
     <run wrapper="emaneshsnapshot"/>
   </step>
 </steps>
