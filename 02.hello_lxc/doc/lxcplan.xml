@@ -12,9 +12,10 @@
       <containers>
         <container lxc_name="node-${'%03d' % lxc_index}" lxc_indices="1-2">
           <parameters>
-            <parameter name="lxc.console" value="none"/>
             <parameter name="lxc.tty" value="1"/>
             <parameter name="lxc.pts" value="128"/>
+            <parameter name="lxc.console" value="none"/>
+            <parameter name="lxc.mount.auto" value="proc sys cgroup"/>
           </parameters>
           <interfaces>
             <interface bridge="br.ctl">
