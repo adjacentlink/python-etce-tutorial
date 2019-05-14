@@ -2,7 +2,7 @@
   <hosts>
     <host hostname="localhost">
       <bridges>
-        <bridge name="br.ctl" persistent="false">
+        <bridge name="br.ctl">
           <ipaddress>
             <ipv4>10.76.0.200/24</ipv4>
           </ipaddress>
@@ -18,7 +18,7 @@
             <parameter name="lxc.mount.auto" value="proc sys cgroup"/>
           </parameters>
           <interfaces>
-            <interface bridge="br.ctl">
+            <interface bridge="br.ctl" hosts_entry_ipv4="${lxc_name}">
               <parameter name="lxc.network.type" value="veth"/>
               <parameter name="lxc.network.name" value="backchan0"/>
               <parameter name="lxc.network.flags" value="up"/>

@@ -32,7 +32,7 @@
 #
 
 
-usage="usage: start_demo.sh [-e ENVFILE] [-p SSHPORT] [-k SSHKEYFILE] SSHUSER DEMODIR"
+usage="usage: start_demo.sh [-e ENVFILE] [-c CONFIGFILE] [-p SSHPORT] [-k SSHKEYFILE] SSHUSER DEMODIR"
 
 envfile=/dev/null
 
@@ -42,8 +42,15 @@ sshkeyfile=
 
 sshport=22
 
-while getopts ":hbe:p:k:" opt; do
+configfile=
+configfileopt=
+
+while getopts ":hbc:e:p:k:" opt; do
     case $opt in
+        c) configfile=${OPTARG};
+           configfileopt="--config ${configfile}"
+           echo "configfile="${configfile}
+           ;;
         e) envfile=${OPTARG};
            echo "envfile=${envfile}"
            ;;
@@ -108,10 +115,10 @@ if [ $sshkeyfile ]; then
     echo "Checking ssh connections on port ${sshport} ..."
     etce-populate-knownhosts -u ${sshuser} -p ${sshport} -k ${sshkeyfile} ${hostfile}
     echo
-    etce-test run -v --user ${sshuser} --sshkey ${sshkeyfile} --env ${envfile} --port ${sshport} etcedemo ${hostfile} ${demodir}
+    etce-test run -v --user ${sshuser} --sshkey ${sshkeyfile} --env ${envfile} --port ${sshport} ${configfileopt} etcedemo ${hostfile} ${demodir}
 else
     echo "Checking ssh connections on port ${sshport} ..."
     etce-populate-knownhosts -u ${sshuser} -p ${sshport}                  ${hostfile}
     echo
-    etce-test run -v --user ${sshuser}                        --env ${envfile} --port ${sshport} etcedemo ${hostfile} ${demodir}
+    etce-test run -v --user ${sshuser}                        --env ${envfile} --port ${sshport} ${configfileopt} etcedemo ${hostfile} ${demodir}
 fi

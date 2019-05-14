@@ -40,12 +40,12 @@ pidfile="${lxc_directory}/var/run/sshd.pid"
   <hosts>
     <host hostname="localhost">
       <bridges>
-        <bridge name="br.ctl" persistent="false">
+        <bridge name="br.ctl">
           <ipaddress>
             <ipv4>10.76.0.200/24</ipv4>
           </ipaddress>
         </bridge>
-        <bridge name="br.ota" persistent="false">
+        <bridge name="br.ota">
           <ipaddress>
             <ipv4>10.77.0.200/24</ipv4>
           </ipaddress>
