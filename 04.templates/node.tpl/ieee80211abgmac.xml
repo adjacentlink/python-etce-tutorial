@@ -6,7 +6,7 @@
   <param name="distance"              value="1000"/>
   <param name="unicastrate"           value="4"/>
   <param name="multicastrate"         value="1"/>
-  <param name="rtsthreshold"          value="0"/>
+  <param name="rtsthreshold"          value="${rtsthreshold}"/>
   <param name="pcrcurveuri"           value="ieee80211pcr.xml"/>
   <param name="flowcontrolenable"     value="off"/>
   <param name="flowcontroltokens"     value="10"/>
