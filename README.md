@@ -10,5 +10,6 @@ aims to explain ETCE with enough detail so that users can effectively
 write, execute and automate their own EMANE emulations upon completion.
 
 
-This project contains the configuration and scripts necessary to run the 
-tutorial.
+This project contains the configuration and scripts necessary to run
+the tutorial. Run the demos in conjunction with the
+[wiki](https://github.com/adjacentlink/python-etce-tutorial/wiki).
