@@ -39,6 +39,7 @@ envfile=/dev/null
 sshuser=
 
 sshkeyfile=
+sshkeyfileopt=
 
 sshport=22
 
@@ -58,6 +59,7 @@ while getopts ":hbc:e:p:k:" opt; do
            echo "sshport=${sshport}"
            ;;
         k) sshkeyfile=${OPTARG};
+           sshkeyfileopt="--sshkey ${sshkeyfile}"
            echo "sshkeyfile="${sshkeyfile}
            ;;
         h) echo ${usage} && exit 0
@@ -110,15 +112,4 @@ fi
 
 echo
 
-# check connectivity and start demo
-if [ $sshkeyfile ]; then
-    echo "Checking ssh connections on port ${sshport} ..."
-    etce-populate-knownhosts -u ${sshuser} -p ${sshport} -k ${sshkeyfile} ${hostfile}
-    echo
-    etce-test run -v --user ${sshuser} --sshkey ${sshkeyfile} --env ${envfile} --port ${sshport} ${configfileopt} etcedemo ${hostfile} ${demodir}
-else
-    echo "Checking ssh connections on port ${sshport} ..."
-    etce-populate-knownhosts -u ${sshuser} -p ${sshport}                  ${hostfile}
-    echo
-    etce-test run -v --user ${sshuser}                        --env ${envfile} --port ${sshport} ${configfileopt} etcedemo ${hostfile} ${demodir}
-fi
+etce-test run -v --user ${sshuser} ${sshkeyfileopt} --env ${envfile} --port ${sshport} ${configfileopt} etcedemo ${hostfile} ${demodir}
