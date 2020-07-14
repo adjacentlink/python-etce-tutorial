@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<otestpoint-broker discovery="0.0.0.0:9001" publish="0.0.0.0:9002">
+  <testpoint discovery="node-001:8881" publish="node-001:8882"/>
+  <testpoint discovery="node-002:8881" publish="node-002:8882"/>
+  <testpoint discovery="node-003:8881" publish="node-003:8882"/>
+  <testpoint discovery="node-004:8881" publish="node-004:8882"/>
+  <testpoint discovery="node-005:8881" publish="node-005:8882"/>
+  <testpoint discovery="node-006:8881" publish="node-006:8882"/>
+  <testpoint discovery="node-007:8881" publish="node-007:8882"/>
+  <testpoint discovery="node-008:8881" publish="node-008:8882"/>
+  <testpoint discovery="node-009:8881" publish="node-009:8882"/>
+  <testpoint discovery="node-010:8881" publish="node-010:8882"/>
+</otestpoint-broker>

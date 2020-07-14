@@ -1,0 +1,9 @@
+<test>
+  <name>01.hello_etce</name>
+
+  <description>
+    Demonstrate a minimal test with
+    a single field node (localhost)
+    and a single step (say.hello).
+  </description>
+</test>

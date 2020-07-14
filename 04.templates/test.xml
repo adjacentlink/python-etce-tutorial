@@ -1,0 +1,19 @@
+<test>
+  <name>04.templates</name>
+
+  <description>
+    emane-tutorial demonstration 3 in ETCE Test Directory format
+    and using templates.
+  </description>
+
+  <overlays>
+    <overlay name="eventservicedevice" value="backchan0"/>
+  </overlays>
+
+  <templates indices="1-10">
+    <directory name="node">
+      <overlay name="rtsthreshold" value="0"/>
+      <overlaylist name="mgen_flow" values="1,2,3,4,5,6,7,8,9,10"/>
+    </directory>
+  </templates>
+</test>

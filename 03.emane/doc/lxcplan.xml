@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lxcplan>
+  <containertemplates>
+    <containertemplate name="node">
+      <parameters>
+        <parameter name="lxc.tty" value="1"/>
+        <parameter name="lxc.pts" value="128"/>
+        <parameter name="lxc.console" value="none"/>
+        <parameter name="lxc.mount.auto" value="proc sys"/>
+      </parameters>
+      <interfaces>
+        <interface bridge="br.ctl" hosts_entry_ipv4="${lxc_name}">
+          <parameter name="lxc.network.type" value="veth"/>
+          <parameter name="lxc.network.name" value="backchan0"/>
+          <parameter name="lxc.network.flags" value="up"/>
+          <parameter name="lxc.network.hwaddr" value="02:00:${'%02x' % lxc_index}:01:00:${'%02x' % lxc_index}"/>
+          <parameter name="lxc.network.ipv4" value="10.76.0.${lxc_index}/16"/>
+          <parameter name="lxc.network.veth.pair" value="veth.ctl.${lxc_index}"/>
+        </interface>
+        <interface bridge="br.ota">
+          <parameter name="lxc.network.type" value="veth"/>
+          <parameter name="lxc.network.name" value="ota0"/>
+          <parameter name="lxc.network.flags" value="up"/>
+          <parameter name="lxc.network.hwaddr" value="02:00:${'%02x' % lxc_index}:02:00:${'%02x' % lxc_index}"/>
+          <parameter name="lxc.network.ipv4" value="10.77.0.${lxc_index}/16"/>
+          <parameter name="lxc.network.veth.pair" value="veth.ota.${lxc_index}"/>
+        </interface>
+      </interfaces>
+      <initscript>#!/bin/bash
+
+# make node for tun device
+mkdir /dev/net
+mknod /dev/net/tun c 10 200
+
+pidfile="${lxc_directory}/var/run/sshd.pid"
+/usr/sbin/sshd -o "PidFile=$pidfile" -o "PermitRootLogin=yes" -o "PasswordAuthentication=no" -o "HostKeyAlgorithms=ssh-rsa"
+      </initscript>
+    </containertemplate>
+  </containertemplates>
+  <hosts>
+    <host hostname="localhost">
+      <bridges>
+        <bridge name="br.ctl">
+          <ipaddress>
+            <ipv4>10.76.0.200/16</ipv4>
+          </ipaddress>
+        </bridge>
+        <bridge name="br.ota">
+          <ipaddress>
+            <ipv4>10.77.0.200/16</ipv4>
+          </ipaddress>
+        </bridge>
+      </bridges>
+      <containers>
+        <container lxc_name="helper" lxc_indices="201" template="node"/>
+        <container lxc_name="node-${'%03d' % lxc_index}" lxc_indices="1-10" template="node"/>
+      </containers>
+    </host>
+  </hosts>
+</lxcplan>

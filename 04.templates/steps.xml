@@ -1,0 +1,22 @@
+<steps>
+  <step name="emane.start">
+    <run wrapper="emane.emane"/>
+  </step>
+  <step name="routing.start">
+    <run wrapper="utils.olsrd"/>
+  </step>
+  <step name="otestpoint.start">
+    <run wrapper="otestpoint.otestpointrecorder"/>
+    <run wrapper="otestpoint.otestpointd"/>
+    <run wrapper="otestpoint.otestpointbroker"/>
+  </step>
+  <step name="run">
+    <run wrapper="emane.emaneeventd"/>
+    <run wrapper="emane.emaneeventservice"/>
+    <run wrapper="utils.gpsd"/>
+    <run wrapper="utils.mgen"/>
+  </step>
+  <step name="stats.snapshot">
+    <run wrapper="emane.emaneshsnapshot"/>
+  </step>
+</steps>
