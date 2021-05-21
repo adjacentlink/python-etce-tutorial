@@ -22,7 +22,6 @@
               <parameter name="lxc.network.type" value="veth"/>
               <parameter name="lxc.network.name" value="backchan0"/>
               <parameter name="lxc.network.flags" value="up"/>
-              <parameter name="lxc.network.hwaddr" value="02:00:${'%02x' % lxc_index}:01:00:${'%02x' % lxc_index}"/>
               <parameter name="lxc.network.ipv4" value="10.76.0.${lxc_index}/16"/>
               <parameter name="lxc.network.veth.pair" value="veth.ctl.${lxc_index}"/>
             </interface>

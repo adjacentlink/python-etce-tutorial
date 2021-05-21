@@ -13,7 +13,6 @@
           <parameter name="lxc.network.type" value="veth"/>
           <parameter name="lxc.network.name" value="backchan0"/>
           <parameter name="lxc.network.flags" value="up"/>
-          <parameter name="lxc.network.hwaddr" value="02:00:${'%02x' % lxc_index}:01:00:${'%02x' % lxc_index}"/>
           <parameter name="lxc.network.ipv4" value="10.76.0.${lxc_index}/16"/>
           <parameter name="lxc.network.veth.pair" value="veth.ctl.${lxc_index}"/>
         </interface>
@@ -21,7 +20,6 @@
           <parameter name="lxc.network.type" value="veth"/>
           <parameter name="lxc.network.name" value="ota0"/>
           <parameter name="lxc.network.flags" value="up"/>
-          <parameter name="lxc.network.hwaddr" value="02:00:${'%02x' % lxc_index}:02:00:${'%02x' % lxc_index}"/>
           <parameter name="lxc.network.ipv4" value="10.77.0.${lxc_index}/16"/>
           <parameter name="lxc.network.veth.pair" value="veth.ota.${lxc_index}"/>
         </interface>
@@ -37,6 +35,7 @@ pidfile="${lxc_directory}/var/run/sshd.pid"
       </initscript>
     </containertemplate>
   </containertemplates>
+
   <hosts>
     <host hostname="localhost">
       <bridges>
@@ -51,6 +50,7 @@ pidfile="${lxc_directory}/var/run/sshd.pid"
           </ipaddress>
         </bridge>
       </bridges>
+
       <containers>
         <container lxc_name="helper" lxc_indices="201" template="node"/>
         <container lxc_name="node-${'%03d' % lxc_index}" lxc_indices="1-10" template="node"/>
