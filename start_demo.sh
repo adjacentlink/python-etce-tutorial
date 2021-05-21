@@ -112,4 +112,4 @@ fi
 
 echo
 
-etce-test run -v --user ${sshuser} ${sshkeyfileopt} --env ${envfile} --port ${sshport} ${configfileopt} etcedemo ${hostfile} ${demodir}
+etce-test run --user ${sshuser} ${sshkeyfileopt} --env ${envfile} --port ${sshport} ${configfileopt} etcedemo ${hostfile} ${demodir}
